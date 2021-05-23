@@ -35,6 +35,7 @@ def checkSlots(log):
                         if session['available_capacity'] > 0:
                             log.info(f"Session available at: {center['name']} [{center['pincode']}] on {currentDate.strftime('%d-%m-%Y')}")
                             log.info(f"Avaliable Capacity: {session['available_capacity']} | Age Limit: {session['min_age_limit']} | Vaccine: {session['vaccine']}")
+                            # add notification code here
                         else:
                             if config('NOTIFY_FULL_CENTERS').lower() == 'true':
                                 log.info(f"Center full at: {center['name']} [{center['pincode']}] | Date: {currentDate.strftime('%d-%m-%Y')}")

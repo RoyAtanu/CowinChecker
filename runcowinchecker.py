@@ -12,7 +12,10 @@ log = logging.getLogger('cowin')
 log.setLevel(logging.DEBUG)
 formatter = logging.Formatter('%(asctime)s | %(message)s', datefmt='%d-%m-%Y %H:%M:%S')
 
-fh = logging.FileHandler(filename='log/cowin.log', mode='a')
+logfilename = 'conwin.log'
+if config('LOG_FILE_NAME') != "":
+    logfilename = config('LOG_FILE_NAME')
+fh = logging.FileHandler(filename='log/' + logfilename, mode='a')
 fh.setLevel(logging.DEBUG)
 fh.setFormatter(formatter)
 
