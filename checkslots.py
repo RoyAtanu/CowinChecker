@@ -5,11 +5,13 @@ from decouple import config
 
 def checkSlots(log):
     numberOfDaysToLook = int(config('NUMBER_OF_DAYS_TO_LOOK'))
-    district = config('DISTRICT_ID')
     currentDate = date.today()
     while numberOfDaysToLook > 0:
         url = "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict"
-        params = {'district_id': str(district), 'date': str(currentDate.strftime("%d-%m-%Y"))}
+        params = {'district_id': config('DISTRICT_ID'), 'date': str(currentDate.strftime("%d-%m-%Y"))}
+        if config('SEARCH_BY_PIN').lower() == 'true':
+            url = "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin"
+            params = {'pincode': config('PIN_CODE'), 'date': str(currentDate.strftime("%d-%m-%Y"))}
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36'
         }
