@@ -11,6 +11,7 @@ docker run -d \
     -e DISTRICT_ID=<district_id> \
     -e NUMBER_OF_DAYS_TO_LOOK=<how_many_days_in_future_to_check> \
     -e INTERVAL_IN_SEC=<interval_between_next_check> \
+    -e NOTIFY_FULL_CENTERS=<set_to_TRUE_if_full_centers_to_be_logged> \
     -e TZ=<timezone_of_log_timestamps> \
     -v /path/to/host/folder:/log \
     --name <container_name> <image_name>

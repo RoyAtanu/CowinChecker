@@ -26,14 +26,16 @@ def checkSlots(log):
                 log.info('Cowin API is not reachable at the moment')
         if response.status_code == 200:
             data = response.json()
-            for center in data['centers']:
-                for session in center['sessions']:
-                    if session['available_capacity'] > 0:
-                        log.info(f"session available at : {center['name']} [{center['pincode']}] on {currentDate.strftime('%d-%m-%Y')}")
-                        log.info(f"Avaliable Capacity : {session['available_capacity']} and Age Limit : {session['min_age_limit']}")
-
-                    else:
-                        log.info(f"full session found at : {center['name']} [{center['pincode']}] on {currentDate.strftime('%d-%m-%Y')}")
+            if len(data['centers']) > 0:
+                log.info(f"Total centers found: {len(data['centers'])} | Date: {currentDate.strftime('%d-%m-%Y')}")
+                for center in data['centers']:
+                    for session in center['sessions']:
+                        if session['available_capacity'] > 0:
+                            log.info(f"Session available at: {center['name']} [{center['pincode']}] on {currentDate.strftime('%d-%m-%Y')}")
+                            log.info(f"Avaliable Capacity: {session['available_capacity']} | Age Limit: {session['min_age_limit']} | Vaccine: {session['vaccine']}")
+                        else:
+                            if config('NOTIFY_FULL_CENTERS').lower() == 'true':
+                                log.info(f"Center full at: {center['name']} [{center['pincode']}] | Date: {currentDate.strftime('%d-%m-%Y')}")
                     
         currentDate += datetime.timedelta(days=1)
         numberOfDaysToLook -= 1
